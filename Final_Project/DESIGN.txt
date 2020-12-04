@@ -1,0 +1,47 @@
+Name: Yeongae Lee
+onid id: leeye
+
+1. Any special instructions the TA will need to know when trying to compile/run your code.
+
+Step1. Run Makefile
+  Command line argument: make
+  Once, you type 'make', the program return compiler 'parse'
+Step2. Run compiler
+  Command line argument: ./parse -O < testing_code/p1.py
+                         ./parse -O < testing_code/p2.py
+                         ./parse -O < testing_code/p3.py
+
+2. Any parts of the assignment you weren't able to get working correctly and a description of why/how they don't work.
+
+One part which I could not figure out is 'break'.
+My program does not correctly read 'break' input.
+Therefore, when the compiler read p3.py file (./parse -O < testing_code/p3.py),
+    example output line 41:  br label %whileContinueBlock
+    expected output line 41:  br label %whileContinueBlock3
+    my actual code line 41: br label %ifContinueBlock16
+The compiler has to return 'br label %whileContinueBlock3'. However, it returns 'br label %ifContinueBlock16'
+Except this part the program prints correct output.
+
+*Note: The numbers behind variables are different.
+      Ex) From, testing p3.py
+          example output line 22 - 24:
+          %f01 = load float, float* %f0
+          %f12 = load float, float* %f1
+          %addtmp = fadd float %f01, %f12
+
+          my output line 22 - 24:
+          %f04 = load float, float* %f0
+          %f15 = load float, float* %f1
+          %addtmp = fadd float %f04, %f15
+
+          The numbers are different but do same work.
+
+3. Any assumptions about the assignment specifications you made when writing your code.
+None
+
+4. A textual description of your program design, e.g. what are the parts of your program, what do they do, and how do they fit together.
+I did not change design much from assignment3. I tried to make the design 3 itself as similar as possible.
+For each assign equation, load value(right side of equation) to temporary variable and store to variable(left side of equation)
+For each operator, if one equation need more than one operator load values and save to temporary variable. Then continues load and save until all operators compute.
+For if else statement, divide block to 'if and else' or only 'if'. The order is condition -> If Block -> Else Block -> Continue Block. At the end of blocks, create 'br' to direct next block.
+For While statement, this is similar as if else statement. while statement need condition block -> While Block -> Continue Block. If statement does not need separated condition block but while statement need it. Same as if statement, create 'br' to direct next block at the end of blocks.
